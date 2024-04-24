@@ -8,7 +8,7 @@ let storage = multer.diskStorage({
 		cb(null, 'uploads/')
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.originalname);
+		cb(null, `${Date.now()}-${file.originalname}`);
 	},
 })
 
@@ -27,7 +27,7 @@ app.post('/api/fileanalyse', upload.single('upfile'), function(req, res) {
 	if (!req.file) res.json({ message: 'No file' })
 
 	// file data 
-	let name = req.file.filename
+	let name = req.file.originalname
 	let type = req.file.mimetype
 	let size= req.file.size
 
